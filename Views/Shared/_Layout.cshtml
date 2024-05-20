@@ -10,11 +10,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <title>AdminLTE 3 | Starter</title>
 
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="https://fonts.googleapis.co    `m/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="~/Dashboard/plugins/fontawesome-free/css/all.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="~/Dashboard/dist/css/adminlte.min.css">
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/Dashboard/dist/css/main.css">
+
 </head>
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
@@ -227,7 +231,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </li>
 
                         <li class="nav-item">
-                            <a href="/categories/index" class="nav-link">
+                            <a  asp-controller="categories" asp-action="index" class="nav-link">
                                 <i class="nav-icon fas fa-th"></i>
                                 <p>
                                     Categories
@@ -240,22 +244,37 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </div>
             <!-- /.sidebar -->
         </aside>
-
+     
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
             <div class="content-header">
                 <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0"> @RenderSection("Title") </h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active">Starter Page</li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+            <div class="content-header">
+                <div class="container-fluid">
                     <div class="row ">
                         <div class="card card-primary card-outline col-12">
-                            <div class="card-header">
-                                <h5 class="m-0"> @RenderBody()</h5>
+                            <div class="card-header d-flex align-items-center  justify-content-between">
+                                <h5 class="m-0"> @RenderSection("SubTitle") </h5>
+                                @RenderSection("Buttons",false)
                             </div>
+                            
                             <div class="card-body">
-                                <h6 class="card-title">Special title treatment</h6>
-
-                                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                                @RenderBody()
                             </div>
                         </div>
                     </div><!-- /.row -->
@@ -266,6 +285,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- /.content -->
         </div>
         <!-- /.content-wrapper -->
+
         <!-- Control Sidebar -->
         <aside class="control-sidebar control-sidebar-dark">
             <!-- Control sidebar content goes here -->
