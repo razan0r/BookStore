@@ -38,9 +38,18 @@ namespace BookStore.Controllers
             {
                 Name = categoryVM.Name
             };
-            context.Categories.Add(category);
-            context.SaveChanges();
-            return RedirectToAction("index");
+            try
+            {
+                context.Categories.Add(category);
+                context.SaveChanges();
+                return RedirectToAction("index");
+            }
+            catch
+            {
+                ModelState.AddModelError("Name", "category name allredy exists");
+                return View("Create", categoryVM);
+            }
+          
         }
 
         [HttpGet]
@@ -114,5 +123,13 @@ namespace BookStore.Controllers
             context.SaveChanges();
             return Ok();
         }
+
+    
+        public IActionResult CheckName(CategoryVM categoryvm)
+        {
+        var isExsits = context.Categories.Any(category => category.Name == categoryvm.Name);
+        return Json(!isExsits);
+        }
+
     }
 }
