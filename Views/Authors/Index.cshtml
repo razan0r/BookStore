@@ -1,5 +1,8 @@
-﻿@using BookStore.ViewModel
+﻿
+@using BookStore.ViewModel
+
 @model List<AuthorVm>
+
 
 @section Title {
 Authors
@@ -45,15 +48,17 @@ Show
                             @item.Name
                         </td>
                         <td>
-                            <a class="btn btn-sm btn-primary" asp-controller="categories" asp-action="Edit"
+                            <a class="btn btn-sm btn-primary" asp-controller="Authors" asp-action="Edit"
                                asp-route-id="@item.Id">
                                 <i class="fas fa-edit"></i> Edit
                             </a>
-                            <a class="btn btn-sm btn-success" asp-controller="categories" asp-action="Details"
+                            <a class="btn btn-sm btn-success" asp-controller="Authors" asp-action="Details"
                                asp-route-id="@item.Id">
                                 <i class="fas fa-info-circle"></i> Details
                             </a>
-                            <a class="btn btn-sm btn-danger js-delete" href="#" data-id="@item.Id">
+
+                            <a class="btn btn-sm btn-danger asp-controller="Authors" asp-action="Delete"
+                               asp-route-id="@item.Id">
                                 <i class="fas fa-trash"></i> Delete
                             </a>
                         </td>

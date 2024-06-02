@@ -78,8 +78,6 @@ namespace BookStore.Controllers
                     }
                }*/
 
-
-
         }
 
         [HttpGet]
@@ -89,30 +87,22 @@ namespace BookStore.Controllers
             var authros = Context.Authors.OrderBy(author => author.Name).ToList();
             var categories = Context.Categories.OrderBy(author => author.Name).ToList();
 
-            var authorList = new List<SelectListItem>();
-
-            foreach (var author in authros)
+            var authorList = Context.Authors.Select(author => new SelectListItem
             {
-                authorList.Add(new SelectListItem
-                {
-                    Value = author.Id.ToString(),
-                    Text = author.Name,
-                });
-            }
-            var categotyList = new List<SelectListItem>();
+                Value = author.Id.ToString(),
+                Text = author.Name,
+            }).ToList();
 
-            foreach (var category in categories)
+            var categoryList = categories.Select(category => new SelectListItem
             {
-                categotyList.Add(new SelectListItem
-                {
-                    Value = category.Id.ToString(),
-                    Text = category.Name,
-                });
-            }
+                Value = category.Id.ToString(),
+                Text = category.Name,
+            }).ToList();
+
             var viewModel = new BookFormVM
             {
                 Authors = authorList,
-                Categories=categotyList,
+                Categories=categoryList,
             };
                 
             return View(viewModel);
@@ -157,7 +147,7 @@ namespace BookStore.Controllers
         public IActionResult Delete(int id)
         {
             var book=Context.Books.Find(id);
-            if (book == null)
+            if (book is null)
             {
                 return NotFound();
             }
