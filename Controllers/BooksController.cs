@@ -1,6 +1,7 @@
 ﻿using BookStore.Data;
 using BookStore.Models;
 using BookStore.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,8 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace BookStore.Controllers
 {
+    [Authorize]
+
     public class BooksController : Controller
     {
         private readonly IWebHostEnvironment webHostEnvironment;
@@ -19,7 +22,11 @@ namespace BookStore.Controllers
             Context = context;
             this.webHostEnvironment = webHostEnvironment;
         }
-
+        /*
+         [AllowAnonymous]
+        هاي بحطها اذا بدي بس هاد الاكشن ادخلو وانا مش مسطجل دخول
+         */
+        
         public IActionResult Index()
         {
             var books = Context.Books.

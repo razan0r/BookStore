@@ -1,4 +1,5 @@
-﻿using BookStore.Data;
+﻿using AutoMapper;
+using BookStore.Data;
 using BookStore.Models;
 using BookStore.ViewModel;
 using Microsoft.AspNetCore.Mvc;
@@ -8,17 +9,19 @@ namespace BookStore.Controllers
     public class CategoriesController : Controller
     {
         private readonly ApplicationDbContext context;
+        private readonly IMapper mapper;
 
-        public CategoriesController(ApplicationDbContext context)
+        public CategoriesController(ApplicationDbContext context,IMapper mapper)
         {
             this.context = context;
+            this.mapper = mapper;
         }
 
         public IActionResult Index()
         {
             var categories=context.Categories.ToList();
-
-            return View(categories);
+            var viewModel=mapper.Map<List<CategoryVM>>(categories);
+            return View(viewModel);
         }
 
         [HttpGet]
@@ -34,10 +37,16 @@ namespace BookStore.Controllers
             {
                 return View("Create", categoryVM);
             }
-            var category = new Category()
-            {
-                Name = categoryVM.Name
-            };
+            
+            //الطريقة بدون المابر     
+            //var category = new Category()
+            //{
+            //    Name = categoryVM.Name
+            //};
+
+            var category=mapper.Map<Category>(categoryVM);
+
+
             try
             {
                 context.Categories.Add(category);

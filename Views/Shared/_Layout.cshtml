@@ -177,7 +177,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <img src="~/Dashboard/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">Alexander Pierce</a>
+                        <a href="#" class="d-block">@User.Identity.Name</a>
                     </div>
                 </div>
 
@@ -232,6 +232,22 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </li>
 
                         <li class="nav-item">
+                            <a asp-controller="Roles" asp-action="index" class="nav-link">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>
+                                    Roles
+                                </p>
+                            </a>
+                        </li>
+                         <li class="nav-item">
+                            <a asp-controller="Users" asp-action="index" class="nav-link">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>
+                                    Users
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a  asp-controller="categories" asp-action="index" class="nav-link">
                                 <i class="nav-icon fas fa-th"></i>
                                 <p>
@@ -256,6 +272,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </p>
                             </a>
                         </li>
+                        @if (User.IsInRole ("Admin"))
+                        {
+                               <li class="nav-item">
+                            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+                                <button type="submit" class="nav-link btn ">Click here to Logout</button>
+                            </form>
+                        </li>
+                        }
+                     
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
@@ -270,7 +295,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0"> @RenderSection("Title") </h1>
+                            <h1 class="m-0"> @RenderSection("Title",false) </h1>
                         </div><!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
@@ -287,7 +312,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <div class="row ">
                         <div class="card card-primary card-outline col-12">
                             <div class="card-header d-flex align-items-center  justify-content-between">
-                                <h5 class="m-0"> @RenderSection("SubTitle") </h5>
+                                <h5 class="m-0"> @RenderSection("SubTitle",false) </h5>
                                 @RenderSection("Buttons",false)
                             </div>
                             

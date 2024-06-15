@@ -9,7 +9,11 @@ Books
 }
 
 @section Buttons {
-    <a asp-controller="Books" asp-action="Create" class="btn btn-primary">Create</a>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <a asp-controller="Books" asp-action="Create" class="btn btn-primary">Create</a>
+
+    }
 }
 <div class="card-body">
     <table class="table table-bordered">
@@ -22,7 +26,10 @@ Books
                 <th>publish Date</th>
                 <th>Image</th>
                 <th>Categories</th>
-                <th style="width:300px">Action</th>
+                 @if (User.Identity.IsAuthenticated)
+                {
+                    <th style="width:300px">Action</th>
+                }
             </tr>
         </thead>
         <tbody>
@@ -65,7 +72,9 @@ Books
                         <td>
                             @string.Join(", ",item.Categories)
                         </td>
-                        <td>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <td>
                             <a class="btn btn-sm btn-primary" asp-controller="Books" asp-action="Edit"
                                asp-route-id="@item.Id">
                                 <i class="fas fa-edit"></i> Edit
@@ -78,7 +87,9 @@ Books
                                 <i class="fas fa-trash"></i> Delete
                             </a>
                          
-                        </td>
+                        </td> 
+                        }
+                       
                     </tr>
                 }
             }

@@ -1,0 +1,106 @@
+﻿@using BookStore.ViewModel
+
+@model List<ApplicationUserVM>
+@section Title {
+Users
+}
+@section SubTitle {
+  Show
+}
+
+@section Buttons {
+    <a asp-controller="Users" asp-action="Create" class="btn btn-primary">Create</a>
+}
+<div class="card-body">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>UserName</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Address</th>
+                <th>Roles</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (!Model.Any())
+            {
+                <tr>
+                    <td colspan="2">
+                        <div class="alert alert-warning alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            <h5><i class="icon fas fa-exclamation-triangle"></i> Alert!</h5>
+                            no data
+                        </div>
+                    </td>
+                </tr>
+
+            }
+            else
+            {
+                @foreach (var item in @Model)
+                {
+                    <tr>
+                        <td>
+                            @item.UserName
+                        </td>
+                        <td>
+                            @item.Email
+                        </td>
+                        <td>
+                            @item.PhoneNumber
+                        </td>
+                        <td>
+                            @item.Address
+                        </td>
+                        <td>@string.Join(", ",item.Roles)</td>
+                    </tr>
+                }
+            }
+
+        </tbody>
+    </table>
+</div>
+
+
+@section Scripts {
+    <script>
+
+
+
+
+        document.querySelectorAll(".js-delete").forEach((btn) => {
+            btn.addEventListener("click", async () => {
+                const id = btn.dataset.id;
+
+                const response = await fetch(`/Books/Delete/${id}`, {
+                    method: 'POST'
+                });
+
+                if (response.ok) {
+                    Swal.fire({
+                        title: "Are you sure?",
+                        text: "You won't be able to revert this!",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Yes, delete it!"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            btn.closest("tr").remove();
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Category deleted successfuly.",
+                                icon: "success"
+                            });
+                        }
+                    });
+
+                }
+            })
+
+        })
+
+    </script>
+}

@@ -25,6 +25,7 @@ namespace BookStore.ViewModel
 
         [Display(Name = "The Categories")]
 
+        //ممكن كل كتاب الو اكتر من كاتاجوري
         public List<int> SelectedCategories { get; set; } = new List<int>();
         public List<SelectListItem>? Categories { get; set; }
 
